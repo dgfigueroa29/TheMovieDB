@@ -1,19 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'koin'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        applicationId "com.example.boa.themoviedb"
-        minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId build_versions.application_id
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode build_versions.version_code
+        versionName build_versions.version_name
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
@@ -22,18 +23,58 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.kotlin
+    implementation deps.koin
+    implementation deps.koin_viewmodel
+    implementation deps.appcompat
+    implementation deps.constraintlayout
+    implementation deps.core_ktx
+    implementation deps.coroutines_core
+    implementation deps.coroutines_android
+    implementation deps.lifecycle_extensions
+    implementation deps.lifecycle_rx
+    implementation deps.viewmodel_ktx
+    implementation deps.recyclerview
+    implementation deps.material
+    implementation deps.cardview
+    implementation deps.glide
+    kapt deps.glide_compiler
+    androidTestImplementation deps.test_ext
+    androidTestImplementation deps.rules
+    androidTestImplementation deps.arch
+    androidTestImplementation deps.koin_test
+    androidTestImplementation deps.espresso_core
+    androidTestImplementation deps.espresso_contrib
+    androidTestImplementation deps.junit
+    androidTestImplementation deps.koin_test
+    testImplementation deps.junit
+    testImplementation deps.test_ext
+    testImplementation deps.rules
+    testImplementation deps.arch
+    testImplementation deps.koin_test
+    testImplementation deps.espresso_core
+    testImplementation deps.espresso_contrib
+    testImplementation deps.koin_test
+    implementation project(':domain')
+    implementation project(':data')
 }
