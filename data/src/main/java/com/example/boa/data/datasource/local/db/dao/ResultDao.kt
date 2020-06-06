@@ -16,4 +16,16 @@ interface ResultDao {
 
     @Query("SELECT * FROM ResultEntity WHERE id = :id")
     fun getById(id: Long): ResultEntity
+
+    @Query("SELECT * FROM ResultEntity WHERE isPopular = 1 AND type = 'movie'")
+    fun getPopularMovies(): List<ResultEntity>
+
+    @Query("SELECT * FROM ResultEntity WHERE isPopular = 1 AND type = 'movie'")
+    fun getPopularTv(): List<ResultEntity>
+
+    @Query("SELECT * FROM ResultEntity WHERE isTopRated = 1 AND type = 'tv'")
+    fun getTopRatedMovies(): List<ResultEntity>
+
+    @Query("SELECT * FROM ResultEntity WHERE isTopRated = 1 AND type = 'tv'")
+    fun getTopRatedTv(): List<ResultEntity>
 }

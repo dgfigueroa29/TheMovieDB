@@ -37,11 +37,19 @@ class SearchRepositoryImpl(
                 resultDataSource.saveResult(it)
             }
         } else {
-            val query = "%${term.trim().toLowerCase(Locale.getDefault())}%"
-            val entities = resultDataSource.getResultsByTerm(query)
-            results = resultEntityToModel.mapAll(entities)
+            results = filterByTerm(term, isMovie = false, isPopular = false)
         }
 
         return results
+    }
+
+    override suspend fun filterByTerm(
+        term: String,
+        isMovie: Boolean,
+        isPopular: Boolean
+    ): List<Result> {
+        val query = "%${term.trim().toLowerCase(Locale.getDefault())}%"
+        val entities = resultDataSource.getResultsByTerm(query)
+        return resultEntityToModel.mapAll(entities)
     }
 }

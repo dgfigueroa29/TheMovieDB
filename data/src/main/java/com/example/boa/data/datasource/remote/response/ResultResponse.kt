@@ -7,7 +7,7 @@ data class ResultResponse(
     val overview: String = "",
     val poster_path: String = "",
     val backdrop_path: String = "",
-    val media_type: String = "",
+    var media_type: String = "",
     val first_air_date: String = "",
     val release_date: String = "",
     val genres: List<ItemResponse> = listOf(),
