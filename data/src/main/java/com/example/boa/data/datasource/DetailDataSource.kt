@@ -1,7 +1,7 @@
-package com.example.boa.domain.repository
+package com.example.boa.data.datasource
 
 import com.example.boa.domain.model.Result
 
-interface DetailRepository {
+interface DetailDataSource {
     suspend fun getById(id: Long, isMovie: Boolean): Result
 }
