@@ -10,6 +10,7 @@ import com.example.boa.data.datasource.remote.ApiProvider
 import com.example.boa.data.datasource.remote.RemoteSearchDataSource
 import com.example.boa.data.mapper.ResultEntityToModel
 import com.example.boa.data.mapper.ResultModelToEntity
+import com.example.boa.data.mapper.ResultResponseToModel
 import com.example.boa.data.mapper.TermEntityToString
 import com.example.boa.data.repository.SearchRepositoryImpl
 import com.example.boa.data.repository.TermRepositoryImpl
@@ -22,7 +23,7 @@ val dataModule = module {
     single<ResultDataSource> { LocalResultDataSource(get()) }
     single<TermDataSource> { LocalTermDataSource(get()) }
 
-    single<SearchDataSource> { RemoteSearchDataSource(get()) }
+    single<SearchDataSource> { RemoteSearchDataSource(get(), get()) }
 
     single<SearchRepository> {
         SearchRepositoryImpl(
@@ -38,6 +39,7 @@ val dataModule = module {
 
     single { ResultEntityToModel() }
     single { ResultModelToEntity() }
+    single { ResultResponseToModel() }
     single { TermEntityToString() }
 
     single { ApiProvider(androidContext()) }

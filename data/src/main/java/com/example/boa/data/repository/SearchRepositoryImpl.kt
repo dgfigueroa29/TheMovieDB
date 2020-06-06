@@ -9,6 +9,7 @@ import com.example.boa.data.mapper.ResultModelToEntity
 import com.example.boa.data.util.isOnline
 import com.example.boa.domain.model.Result
 import com.example.boa.domain.repository.SearchRepository
+import java.util.*
 
 class SearchRepositoryImpl(
     private val searchDataSource: SearchDataSource,
@@ -20,7 +21,7 @@ class SearchRepositoryImpl(
 ) : SearchRepository {
     override suspend fun searchByTerm(term: String): List<Result> {
         var results = if (isOnline(context)) {
-            searchDataSource.searchByTerm(term.replace(" ", "+"))
+            searchDataSource.searchByTerm(term.replace(" ", "%20"))
         } else {
             listOf()
         }
@@ -31,10 +32,13 @@ class SearchRepositoryImpl(
             val entities = resultModelToEntity.mapAll(results)
             entities.forEach {
                 it.term = term
+                it.isPopular = false
+                it.isTopRated = false
                 resultDataSource.saveResult(it)
             }
         } else {
-            val entities = resultDataSource.getResultsByTerm(term)
+            val query = "%${term.trim().toLowerCase(Locale.getDefault())}%"
+            val entities = resultDataSource.getResultsByTerm(query)
             results = resultEntityToModel.mapAll(entities)
         }
 

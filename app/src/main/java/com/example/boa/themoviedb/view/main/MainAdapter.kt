@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.ViewGroupCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.boa.domain.model.Result
 import com.example.boa.themoviedb.R
 import com.example.boa.themoviedb.core.BaseOnSelectItem
@@ -31,11 +30,6 @@ class MainAdapter(private val context: Context, private val listener: BaseOnSele
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val result = resultList[position]
-        holder.trackNameTv.text = result.trackName
-        holder.artistNameTv.text = result.artistName
-        Glide.with(context).load(result.artworkUrl60).error(R.mipmap.ic_launcher)
-            .placeholder(R.mipmap.ic_launcher).into(holder.trackImage)
     }
 
     fun setData(newList: List<Result>) {

@@ -10,5 +10,7 @@ class LocalResultDataSource(private val database: TheMovieDBDatabase) : ResultDa
     }
 
     override suspend fun getResultsByTerm(term: String): List<ResultEntity> =
-        database.resultDao().getAll()
+        database.resultDao().getByText(term)
+
+    override suspend fun getById(id: Long): ResultEntity = database.resultDao().getById(id)
 }

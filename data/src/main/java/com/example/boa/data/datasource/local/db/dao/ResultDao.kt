@@ -1,6 +1,9 @@
 package com.example.boa.data.datasource.local.db.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.example.boa.data.entity.ResultEntity
 
 @Dao
@@ -8,12 +11,9 @@ interface ResultDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(resultEntity: ResultEntity)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(resultEntity: ResultEntity)
+    @Query("SELECT * FROM ResultEntity WHERE LOWER(term) LIKE :text")
+    fun getByText(text: String): List<ResultEntity>
 
-    @Delete
-    fun delete(resultEntity: ResultEntity)
-
-    @Query("SELECT * FROM ResultEntity")
-    fun getAll(): List<ResultEntity>
+    @Query("SELECT * FROM ResultEntity WHERE id = :id")
+    fun getById(id: Long): ResultEntity
 }

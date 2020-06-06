@@ -8,8 +8,9 @@ abstract class BaseMapper<I, O> {
 
     fun mapAll(input: Collection<I>?): List<O> {
         val list = ArrayList<O>()
-        if (input != null) {
-            input.takeIf { it.isNotEmpty() }?.forEach {
+
+        if (!input.isNullOrEmpty()) {
+            input.forEach {
                 val mapped = map(it)
 
                 if (!list.contains(mapped)) {

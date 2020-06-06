@@ -7,14 +7,14 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.transition.TransitionManager
+import com.example.boa.data.util.IMAGE_URL_PREFIX
+import com.example.boa.data.util.VIDEO_URL_PREFIX
 import com.example.boa.domain.model.Result
 import com.example.boa.domain.util.OFFLINE_ERROR_TEXT
 import com.example.boa.themoviedb.R
 import com.example.boa.themoviedb.core.BaseActivity
 import com.example.boa.themoviedb.core.BaseOnSelectItem
 import com.example.boa.themoviedb.ui.Stagger
-import com.example.boa.themoviedb.util.COLLECTION_PREVIEW_KEY
-import com.example.boa.themoviedb.util.PREVIEW_KEY
 import com.example.boa.themoviedb.util.build
 import com.example.boa.themoviedb.util.toast
 import com.example.boa.themoviedb.view.detail.DetailActivity
@@ -76,8 +76,8 @@ class MainActivity : BaseActivity<MainViewStatus, MainViewModel>(), BaseOnSelect
 
     override fun onSelectItem(item: Result) {
         val intent = Intent(this@MainActivity, DetailActivity::class.java)
-        intent.putExtra(COLLECTION_PREVIEW_KEY, item.collectionViewUrl)
-        intent.putExtra(PREVIEW_KEY, item.previewUrl)
+        intent.putExtra(IMAGE_URL_PREFIX, IMAGE_URL_PREFIX)
+        intent.putExtra(VIDEO_URL_PREFIX, VIDEO_URL_PREFIX)
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     }
 
